@@ -1,0 +1,27 @@
+{
+  "name": "libincex/php_weixinapi",
+  "type": "library",
+  "description": "Wechat Service API Developed by PHP",
+  "keywords": [
+    "weixin",
+    "wechat",
+    "weixinapi",
+    "wechatapi"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Libin",
+      "email": "libincex@163.com",
+      "homepage": "https://www.coolni.cn/",
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "WeixinApi\\": "scr/"
+    }
+  }
+}

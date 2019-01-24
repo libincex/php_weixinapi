@@ -1,0 +1,6 @@
+/vendor/
+/.idea/
+/﻿.svn/
+/.git/
+composer.lock
+.env
