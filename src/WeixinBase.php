@@ -70,7 +70,7 @@ class WeixinBase
      * access_token的有效期目前为2个小时，需定时刷新，重复获取将导致上次获取的access_token失效。
      * @return string access_token
      */
-    protected function getAccessToken()
+    public function getAccessToken()
     {
         if (empty($this->_access_token)) {
             $api_url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' . $this->_app_id . '&secret=' . $this->_app_secret;
