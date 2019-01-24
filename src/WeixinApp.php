@@ -6,7 +6,7 @@
  * Time: 下午12:35
  */
 
-namespace WeixinApi;
+namespace Libincex\WeixinApi;
 
 
 class WeixinApp extends WeixinBase

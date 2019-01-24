@@ -21,7 +21,7 @@
   },
   "autoload": {
     "psr-4": {
-      "libincex\\WeixinApi\\": "scr/"
+      "Libincex\\WeixinApi\\": "src/"
     }
   }
 }
