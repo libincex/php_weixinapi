@@ -46,6 +46,11 @@ class WeixinBase
         $this->_app_id = $app_id;
     }
 
+    public function getAppId()
+    {
+        return $this->_app_id;
+    }
+
     /**
      * 设置参数
      * @param $app_secret
@@ -53,6 +58,11 @@ class WeixinBase
     public function setAppSecret($app_secret)
     {
         $this->_app_secret = $app_secret;
+    }
+
+    public function getAppSecret()
+    {
+        return $this->_app_secret;
     }
 
     /** 设置参数

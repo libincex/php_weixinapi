@@ -9,7 +9,7 @@
 namespace Libincex\WeixinApi;
 
 
-class WeixinMP extends WeixinBase
+class WeixinMp extends WeixinBase
 {
 
     /**
