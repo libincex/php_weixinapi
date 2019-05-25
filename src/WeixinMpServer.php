@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: libin
- * Date: 2019/5/25
- * Time: 下午1:54
- */
-
 namespace Libincex\WeixinApi;
 
 /**
@@ -14,6 +7,8 @@ namespace Libincex\WeixinApi;
 class WeixinMpServer extends WeixinBase
 {
     protected $AppID = '';
+
+    //用于回调服务的参数
     protected $token = '';
     protected $encodingAESKey = ''; //消息加解密密钥
 
@@ -42,6 +37,24 @@ class WeixinMpServer extends WeixinBase
         return $this->encodingAESKey;
     }
 
+    //开发者首次提交验证申请时，验证消息真实性
+    function valid()
+    {
+        $signature = trim($_GET["signature"]);
+        $timestamp = trim($_GET["timestamp"]);
+        $nonce = trim($_GET["nonce"]);
+
+        $token = $this->getToken();
+        $tmpArr = array($token, $timestamp, $nonce);
+        sort($tmpArr, SORT_STRING);
+        $tmpStr = implode($tmpArr);
+        $tmpStr = sha1($tmpStr);
+
+        if ($tmpStr == $signature) {
+            echo strip_tags(trim($_GET["echostr"]));
+        }
+        exit;
+    }
 
     //设置处理服务端事件的类
     protected $respond;

@@ -1,7 +1,7 @@
 <?php
 /**
  * 微信公众号（含服务号与订阅号）
- * User: libin
+ * User: libincex@163.com
  * Date: 2019/1/24
  * Time: 下午12:35
  */

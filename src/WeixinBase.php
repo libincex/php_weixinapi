@@ -1,7 +1,7 @@
 <?php
 /**
  * 微信公众平台后端服务基类
- * User: libin@163.com
+ * User: libincex@163.com
  * Date: 2019/1/24
  * Time: 下午12:27
  */

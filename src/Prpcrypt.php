@@ -1,17 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: libin
- * Date: 2019/5/25
- * Time: 下午2:00
- */
-
 namespace Libincex\WeixinApi;
 
 
 /**
  * Prpcrypt class
- *
  * 提供接收和推送给公众平台消息的加解密接口.
  */
 class Prpcrypt
@@ -31,7 +23,8 @@ class Prpcrypt
     /**
      * 对明文进行加密
      * @param string $text 需要加密的明文
-     * @return string 加密后的密文
+     * @param $appid
+     * @return array 加密后的密文
      */
     public function encrypt($text, $appid)
     {
@@ -65,7 +58,8 @@ class Prpcrypt
     /**
      * 对密文进行解密
      * @param string $encrypted 需要解密的密文
-     * @return string 解密得到的明文
+     * @param string $appid
+     * @return array|string 解密得到的明文
      */
     public function decrypt($encrypted, $appid)
     {

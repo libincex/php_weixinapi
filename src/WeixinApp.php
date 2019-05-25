@@ -1,14 +1,11 @@
 <?php
-/**
- * 微信小程序后端服务接口类
- * User: libin
- * Date: 2019/1/24
- * Time: 下午12:35
- */
-
 namespace Libincex\WeixinApi;
 
-
+/**
+ * 微信小程序后端服务接口类
+ * Class WeixinApp
+ * @package Libincex\WeixinApi
+ */
 class WeixinApp extends WeixinBase
 {
 

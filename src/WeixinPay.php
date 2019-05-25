@@ -1,14 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: libin
- * Date: 2019/5/25
- * Time: 下午1:35
- */
-
 namespace Libincex\WeixinApi;
 
-/*
+/**
  * 微信支付操作类
 
 $data = Weixinpay::unifiedorder(array(
@@ -27,14 +20,6 @@ class WeixinPay extends WeixinBase
     protected $sslCertPath; //ssl证书路径
     protected $sslKeyPath; //ssl证书密钥
 
-    /*
-    protected $config = array(
-        'appid' => 'wx040bce11917b383c', //微信分配的公众账号ID
-        'Api_Key' => '123qwert345gbh2wdkm890ijhssr4578', //API密钥
-        'mch_id' => '1240098402', //微信支付分配的商户号
-        'notify_url' => 'http://www.coolni.cn/callback.php', //回调网址
-    );
-    */
 
     //获取 微信支付分配的商户号
     function getMchId()
@@ -83,7 +68,7 @@ class WeixinPay extends WeixinBase
     [id] 生成的订单id
     [prepay_id] 微信平台的支付id
     */
-    function unifiedorder($data = array())
+    function unifiedorder($data = [])
     {
         empty($data['id']) && $data['id'] = self::id();
         empty($data['trade_type']) && $data['trade_type'] = 'JSAPI';
@@ -108,14 +93,14 @@ class WeixinPay extends WeixinBase
             $params['openid'] = trim($data['openid']);
         }
 
-        $params['sign'] = self::sign($params); //签名
+        $params['sign'] = $this->sign($params); //签名
         $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
 
-        $redata = self::postXmlCurl($params, $url);
+        $redata = $this->postXmlCurl($params, $url);
         if ($redata['return_code'] == 'SUCCESS' && !empty($redata['prepay_id'])) {
             $redata['id'] = $params['out_trade_no'];
         } else {
-            $redata = array();
+            $redata = [];
         }
 
         return $redata;
@@ -129,6 +114,7 @@ class WeixinPay extends WeixinBase
         empty($xml) && $xml = file_get_contents("php://input");
         $data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
         if ($data["return_code"] == "SUCCESS") {
+
             //交易成功，处理您的数据库
             return array('value' => true, 'text' => '交易成功', 'data' => array(
                 'id' => trim($data['out_trade_no']), //商户订单号
@@ -140,7 +126,10 @@ class WeixinPay extends WeixinBase
             echo "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>"; //请不要修改或删除
         }
 
-        return array('value' => false, 'text' => '交易失败');
+        return [
+            'value' => false,
+            'text' => '交易失败'
+        ];
     }
 
     /*
@@ -156,14 +145,14 @@ class WeixinPay extends WeixinBase
             'nonce_str' => uniqid(), //随机字符串
             'out_trade_no' => trim($orderId), //商户订单号
         );
-        $params['sign'] = self::sign($params); //签名
+        $params['sign'] = $this->sign($params); //签名
 
         $url = 'https://api.mch.weixin.qq.com/pay/orderquery';
-        $redata = self::postXmlCurl($params, $url);
+        $redata = $this->postXmlCurl($params, $url);
         if ($redata['return_code'] == 'SUCCESS') {
             $redata['id'] = $params['out_trade_no'];
         } else {
-            $redata = array();
+            $redata = [];
         }
 
         return $redata;
@@ -175,7 +164,7 @@ class WeixinPay extends WeixinBase
     {
         $prepay_id = trim($prepay_id);
         if (empty($prepay_id)) {
-            return array();
+            return [];
         }
 
         $signPackage = array(
@@ -205,7 +194,7 @@ class WeixinPay extends WeixinBase
         ksort($data);
         $data['key'] = $this->getAppSecret();
         //print_r($data);
-        $uriArr = array();
+        $uriArr = [];
         foreach ($data as $key => $val) {
             if (!empty($val)) {
                 $uriArr[] = "{$key}={$val}";
@@ -270,12 +259,12 @@ class WeixinPay extends WeixinBase
             $redata = json_decode(json_encode(simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
             !is_array($redata) && $redata = [];
         }
-        
+
         return $redata;
     }
 
     //转换参数,微信服务端需要用的xml格式
-    public static function toXml($data = array())
+    public static function toXml($data = [])
     {
         $xml = "<xml>";
         if (is_array($data)) {

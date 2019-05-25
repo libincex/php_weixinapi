@@ -1,15 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: libin
- * Date: 2019/5/25
- * Time: 下午1:35
- */
 
 namespace Libincex\WeixinApi;
 
 /**
  * 微信操作类
+ * Class WeixinApi
+ * @package Libincex\WeixinApi
  */
 class WeixinApi
 {
@@ -23,22 +19,10 @@ class WeixinApi
     private $AppID = '';
     private $AppSecret = '';
 
-    //用于回调服务的参数
-    private $token = '';
-    private $EncodingAESKey = '';
-
-    function __construct($AppID, $AppSecret, $token = '', $EncodingAESKey = '')
+    function __construct($AppID, $AppSecret)
     {
         $this->AppID = trim($AppID);
         $this->AppSecret = trim($AppSecret);
-
-        $this->token = trim($token);
-        $this->EncodingAESKey = trim($EncodingAESKey);
-
-        //服务端验证
-        if (!empty($_REQUEST['echostr'])) {
-            $this->valid();
-        }
     }
 
     //获取授权对象
@@ -68,8 +52,12 @@ class WeixinApi
             $server = WeixinMpServer::getInstance($this->AppID, '');
             $server->setToken($token);
             $server->setEncodingAESKey($encodingAESKey);
-
             self::$server[$this->AppID] = $server;
+
+            //服务端验证
+            if (!empty($_REQUEST['echostr'])) {
+                $server->valid();
+            }
         }
 
         return self::$server[$this->AppID];
@@ -100,24 +88,7 @@ class WeixinApi
         return self::$pay[$this->AppID];
     }
 
-    //开发者首次提交验证申请时，验证消息真实性
-    function valid()
-    {
-        $signature = trim($_GET["signature"]);
-        $timestamp = trim($_GET["timestamp"]);
-        $nonce = trim($_GET["nonce"]);
 
-        $token = $this->token;
-        $tmpArr = array($token, $timestamp, $nonce);
-        sort($tmpArr, SORT_STRING);
-        $tmpStr = implode($tmpArr);
-        $tmpStr = sha1($tmpStr);
-
-        if ($tmpStr == $signature) {
-            echo strip_tags(trim($_GET["echostr"]));
-        }
-        exit;
-    }
 
     //curl post提交数据
     public static function post($url, $data = array(), $timeout = 10, $httpheader = array())

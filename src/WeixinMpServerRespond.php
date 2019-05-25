@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: libin
- * Date: 2019/5/25
- * Time: 下午1:56
- */
-
 namespace Libincex\WeixinApi;
 
 /**
